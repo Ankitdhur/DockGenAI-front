@@ -1,5 +1,5 @@
 export const API_CONFIG = {
-  BASE_URL: 'https://dockgenai-backend.onrender.com',
+  BASE_URL: ' https://dockgenai-backend-4.onrender.com',
   ENDPOINTS: {
     GENERATE: '/api/generation/generate',
     STATUS: '/api/generation/status',
