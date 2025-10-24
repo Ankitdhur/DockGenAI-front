@@ -1,5 +1,5 @@
 export const API_CONFIG = {
-  BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3001',
+  BASE_URL: 'https://dockgenai-backend.onrender.com' || 'http://localhost:3001',
   ENDPOINTS: {
     GENERATE: '/api/generation/generate',
     STATUS: '/api/generation/status',
