@@ -140,11 +140,11 @@ export default function DockGenForm() {
               />
             )}
 
-            {generationStatus.generation.error && (
+            {/* {generationStatus.generation.error && (
               <div className="text-red-400 text-sm">
                 <strong>Error:</strong> {generationStatus.generation.error}
               </div>
-            )}
+            )} */}
           </div>
         )}
 
