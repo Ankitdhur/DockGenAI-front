@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import ResultCard from "./ResultCard";
 import { Loader2, CheckCircle, XCircle, Clock } from "lucide-react";
 import { Toaster, toast } from "sonner";
-import { Card } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { apiService, GenerationStatus } from "@/lib/api";
 
 export default function DockGenForm() {
@@ -73,12 +73,14 @@ export default function DockGenForm() {
 
   return (
     <section id="demo" className="flex justify-center mt-16">
-      <Card className="max-w-3xl w-full mx-6 p-8 rounded-2xl backdrop-blur-xl bg-white/10 border border-white/20 shadow-2xl">
-        <h3 className="text-2xl font-semibold mb-6 text-center bg-gradient-to-r from-indigo-400 to-cyan-300 bg-clip-text text-transparent">
-          Enter Repository Details
-        </h3>
-
-        <div className="space-y-4">
+      <Card className="max-w-3xl w-full mx-6 rounded-2xl backdrop-blur-xl bg-white/10 border border-white/20 shadow-2xl">
+        <CardHeader>
+          <CardTitle className="text-2xl font-semibold text-center bg-gradient-to-r from-indigo-400 to-cyan-300 bg-clip-text text-transparent">
+            Enter Repository Details
+          </CardTitle>
+        </CardHeader>
+        
+        <CardContent className="space-y-4">
           <Input
             placeholder="GitHub Repository URL"
             value={repoUrl}
@@ -106,47 +108,47 @@ export default function DockGenForm() {
               "Generate & Build Image"
             )}
           </Button>
-        </div>
 
-        {generationStatus && (
-          <div className="mt-6 space-y-4">
-            <div className="flex items-center space-x-2">
-              {generationStatus.generation.buildStatus === 'success' && (
-                <CheckCircle className="h-5 w-5 text-green-400" />
+          {generationStatus && (
+            <div className="mt-6 space-y-4">
+              <div className="flex items-center space-x-2">
+                {generationStatus.generation.buildStatus === 'success' && (
+                  <CheckCircle className="h-5 w-5 text-green-400" />
+                )}
+                {generationStatus.generation.buildStatus === 'error' && (
+                  <XCircle className="h-5 w-5 text-red-400" />
+                )}
+                {(generationStatus.generation.buildStatus === 'pending' || 
+                  generationStatus.generation.buildStatus === 'building') && (
+                  <Clock className="h-5 w-5 text-yellow-400 animate-spin" />
+                )}
+                <span className="text-sm text-gray-300">
+                  Status: {generationStatus.generation.buildStatus}
+                </span>
+              </div>
+
+              {generationStatus.generation.techStack && (
+                <div className="text-sm text-gray-300">
+                  <strong>Detected Tech Stack:</strong> {generationStatus.generation.techStack.join(', ')}
+                </div>
               )}
-              {generationStatus.generation.buildStatus === 'error' && (
-                <XCircle className="h-5 w-5 text-red-400" />
+
+              {generationStatus.generation.dockerfile && (
+                <ResultCard
+                  dockerfile={generationStatus.generation.dockerfile}
+                  imageTag={generationStatus.generation.imageId || 'generated-image'}
+                  generationId={generationStatus.generation.id}
+                />
               )}
-              {(generationStatus.generation.buildStatus === 'pending' || 
-                generationStatus.generation.buildStatus === 'building') && (
-                <Clock className="h-5 w-5 text-yellow-400 animate-spin" />
-              )}
-              <span className="text-sm text-gray-300">
-                Status: {generationStatus.generation.buildStatus}
-              </span>
+
+              {/* {generationStatus.generation.error && (
+                <div className="text-red-400 text-sm">
+                  <strong>Error:</strong> {generationStatus.generation.error}
+                </div>
+              )} */}
             </div>
-
-            {generationStatus.generation.techStack && (
-              <div className="text-sm text-gray-300">
-                <strong>Detected Tech Stack:</strong> {generationStatus.generation.techStack.join(', ')}
-              </div>
-            )}
-
-            {generationStatus.generation.dockerfile && (
-              <ResultCard
-                dockerfile={generationStatus.generation.dockerfile}
-                imageTag={generationStatus.generation.imageId || 'generated-image'}
-                generationId={generationStatus.generation.id}
-              />
-            )}
-
-            {/* {generationStatus.generation.error && (
-              <div className="text-red-400 text-sm">
-                <strong>Error:</strong> {generationStatus.generation.error}
-              </div>
-            )} */}
-          </div>
-        )}
+          )}
+        </CardContent>
 
         <Toaster position="bottom-center" richColors />
       </Card>
