@@ -1,4 +1,4 @@
-# DockGen AI Client
+# DockGen-AI 
 
 A modern Next.js application that automatically generates and builds Docker images from GitHub repositories using AI-powered technology. Simply provide your GitHub repository URL and let DockGen AI detect your tech stack, generate an optimized Dockerfile, and build the Docker image automatically.
 
